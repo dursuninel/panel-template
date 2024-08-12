@@ -26,7 +26,6 @@ function App() {
             <Suspense fallback={<Loader />}>
               <Routes>
                 <Route index element={<>Anasayfa</>} />
-
                 <Route path="/blogs" element={<Blog />} />
                 <Route path="/news" element={<>Haberler</>} />
                 <Route path="*" element={<>Hatalı Sayfa</>} />
