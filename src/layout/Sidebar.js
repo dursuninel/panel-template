@@ -9,9 +9,39 @@ import {
 } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 
-const Sidebar = ({ isOpen }) => {
+const DropdownLink = ({ title, pages }) => {
   const [productListShow, setProductListShow] = useState(false);
 
+  return (
+    <li
+      className={`navigation_item navigation_collapse${
+        productListShow ? " open" : ""
+      }`}
+    >
+      <div onClick={() => setProductListShow(!productListShow)}>
+        <div>
+          <FaProductHunt /> {title}
+        </div>
+        <div>
+          <FaAngleRight />
+        </div>
+      </div>
+      <ul
+        className={`${productListShow ? "open " : ""}navigation_collapse_list`}
+      >
+        {pages.map((item, key) => (
+          <li>
+            <NavLink to={item.link} key={key}>
+              <FaAngleRight /> {item.title}
+            </NavLink>
+          </li>
+        ))}
+      </ul>
+    </li>
+  );
+};
+
+const Sidebar = ({ isOpen }) => {
   return (
     <>
       <div className={`sidebar ${isOpen ? "open" : ""}`}>
@@ -32,43 +62,15 @@ const Sidebar = ({ isOpen }) => {
               <FaUser /> Haberler
             </NavLink>
           </li>
-          <li
-            className={`navigation_item navigation_collapse${
-              productListShow ? " open" : ""
-            }`}
-          >
-            <div onClick={() => setProductListShow(!productListShow)}>
-              <div>
-                <FaProductHunt /> Ürünler
-              </div>
-              <div>
-                <FaAngleRight />
-              </div>
-            </div>
-            <ul
-              className={`${
-                productListShow ? "open " : ""
-              }navigation_collapse_list`}
-            >
-              <li>
-                <NavLink to={"/panel/sayfa1"}>
-                  <FaAngleRight /> Panel Sayfa 1
-                </NavLink>
-              </li>
-
-              <li>
-                <NavLink to={"/panel/sayfa2"}>
-                  <FaAngleRight /> Panel Sayfa 2
-                </NavLink>
-              </li>
-
-              <li>
-                <NavLink to={"/panel/sayfa3"}>
-                  <FaAngleRight /> Panel Sayfa 3
-                </NavLink>
-              </li>
-            </ul>
-          </li>
+          
+          <DropdownLink
+            title={"Ürünler"}
+            pages={[
+              { title: "Panel Sayfa 1", link: "/" },
+              { title: "Panel Sayfa 2", link: "/" },
+              { title: "Panel Sayfa 3", link: "/" },
+            ]}
+          />
         </ul>
       </div>
     </>
